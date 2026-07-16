@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { ArrowLeft, User2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export function SPShell({
   children,
