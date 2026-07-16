@@ -30,8 +30,8 @@ function LoginPage() {
 
   return (
     <SPShell className="pb-0">
-      <div className="flex min-h-[calc(100vh-1.5rem)] flex-col">
-        <div className="shrink-0 pt-8">
+      <div className="flex h-[calc(100vh-1.5rem)] flex-col overflow-hidden">
+        <div className="shrink-0 overflow-y-auto px-2 pt-8 pb-6">
           <div className="text-center">
             <h1 className="text-4xl font-extrabold tracking-tight text-primary">SmartPocket</h1>
             <p className="mt-2 text-base font-semibold italic text-muted-foreground">
@@ -75,7 +75,7 @@ function LoginPage() {
         </div>
 
         <div
-          className="relative mt-6 min-h-0 flex-1 bg-white"
+          className="relative min-h-0 flex-1 bg-white"
           style={{
             width: "100vw",
             marginLeft: "calc(-50vw + 50%)",
