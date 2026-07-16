@@ -8,17 +8,19 @@ export function SPShell({
   showBack = false,
   showProfile = false,
   onProfile,
+  className = "",
 }: {
   children: ReactNode;
   title?: string;
   showBack?: boolean;
   showProfile?: boolean;
   onProfile?: () => void;
+  className?: string;
 }) {
   const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-background">
-      <div className="mx-auto flex min-h-screen max-w-md flex-col px-6 pb-24 pt-6">
+      <div className={"mx-auto flex min-h-screen max-w-md flex-col px-6 pb-24 pt-6 " + className}>
         {(title || showBack || showProfile) && (
           <header className="mb-4 flex items-center justify-between gap-4">
             <div className="flex min-w-0 items-center gap-3">
