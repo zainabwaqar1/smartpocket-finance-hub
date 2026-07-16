@@ -20,7 +20,7 @@ export function SPShell({
   const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-background">
-      <div className={"mx-auto flex min-h-screen max-w-md flex-col px-6 pb-24 pt-6 " + className}>
+      <div className={cn("mx-auto flex min-h-screen max-w-md flex-col px-6 pt-6", className || "pb-24")}>
         {(title || showBack || showProfile) && (
           <header className="mb-4 flex items-center justify-between gap-4">
             <div className="flex min-w-0 items-center gap-3">
