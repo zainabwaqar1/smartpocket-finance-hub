@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { sp, useSP } from "@/lib/smartpocket-store";
 import { Field, PrimaryButton, SPShell, TextInput } from "@/components/sp-shell";
+import studentsIllustration from "@/assets/login-students.png";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
@@ -29,7 +30,7 @@ function LoginPage() {
 
   return (
     <SPShell>
-      <div className="flex min-h-[80vh] flex-col justify-center gap-8 pb-8">
+      <div className="relative flex min-h-[calc(100vh-3rem)] flex-col pb-0 pt-8">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold tracking-tight text-primary">SmartPocket</h1>
           <p className="mt-2 text-base font-semibold italic text-muted-foreground">
@@ -37,7 +38,7 @@ function LoginPage() {
           </p>
         </div>
 
-        <form onSubmit={submit} className="flex flex-col gap-4">
+        <form onSubmit={submit} className="mt-10 flex flex-col gap-4">
           <Field label="">
             <TextInput
               type="email"
@@ -59,20 +60,27 @@ function LoginPage() {
               autoComplete={mode === "login" ? "current-password" : "new-password"}
             />
           </Field>
-          <div className="pt-2">
+          <div className="px-6 pt-4">
             <PrimaryButton type="submit">{mode === "login" ? "Login" : "Sign Up"}</PrimaryButton>
           </div>
           <button
             type="button"
-            className="mt-2 text-sm font-semibold text-primary/80 underline-offset-4 hover:underline"
+            className="text-center text-sm font-semibold text-primary/80 underline-offset-4 hover:underline"
             onClick={() => setMode((m) => (m === "login" ? "signup" : "login"))}
           >
             {mode === "login" ? "New here? Create an account" : "Already have an account? Login"}
           </button>
         </form>
 
-        <div aria-hidden className="pointer-events-none mt-4 select-none text-center text-[6rem] leading-none opacity-40">
-          👥💰📊
+        <div className="mt-auto -mx-6 pt-8">
+          <img
+            src={studentsIllustration}
+            alt="Students using SmartPocket"
+            width={1200}
+            height={700}
+            className="w-full select-none object-contain"
+            draggable={false}
+          />
         </div>
       </div>
     </SPShell>
