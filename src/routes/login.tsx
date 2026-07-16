@@ -72,17 +72,15 @@ function LoginPage() {
           </button>
         </form>
 
-        <div className="mt-auto -mx-6 pt-8">
-          <img
-            src={studentsIllustration}
-            alt="Students using SmartPocket"
-            width={1200}
-            height={700}
-            className="w-full select-none object-contain"
-            draggable={false}
-          />
-        </div>
       </div>
+      <img
+        src={studentsIllustration}
+        alt="Students using SmartPocket"
+        width={1200}
+        height={700}
+        className="pointer-events-none fixed inset-x-0 bottom-0 w-screen select-none object-cover object-top"
+        draggable={false}
+      />
     </SPShell>
   );
 }
