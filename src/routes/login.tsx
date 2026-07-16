@@ -29,58 +29,67 @@ function LoginPage() {
   }
 
   return (
-    <SPShell>
-      <div className="relative flex min-h-[calc(100vh-3rem)] flex-col pb-0 pt-8">
-        <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight text-primary">SmartPocket</h1>
-          <p className="mt-2 text-base font-semibold italic text-muted-foreground">
-            Track your spending. Save smarter.
-          </p>
+    <SPShell className="pb-0">
+      <div className="flex min-h-[calc(100vh-1.5rem)] flex-col">
+        <div className="shrink-0 pt-8">
+          <div className="text-center">
+            <h1 className="text-4xl font-extrabold tracking-tight text-primary">SmartPocket</h1>
+            <p className="mt-2 text-base font-semibold italic text-muted-foreground">
+              Track your spending. Save smarter.
+            </p>
+          </div>
+
+          <form onSubmit={submit} className="mt-10 flex flex-col gap-4">
+            <Field label="">
+              <TextInput
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                autoComplete="email"
+              />
+            </Field>
+            <Field label="">
+              <TextInput
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                minLength={4}
+                autoComplete={mode === "login" ? "current-password" : "new-password"}
+              />
+            </Field>
+            <div className="px-6 pt-4">
+              <PrimaryButton type="submit">{mode === "login" ? "Login" : "Sign Up"}</PrimaryButton>
+            </div>
+            <button
+              type="button"
+              className="text-center text-sm font-semibold text-primary/80 underline-offset-4 hover:underline"
+              onClick={() => setMode((m) => (m === "login" ? "signup" : "login"))}
+            >
+              {mode === "login" ? "New here? Create an account" : "Already have an account? Login"}
+            </button>
+          </form>
         </div>
 
-        <form onSubmit={submit} className="mt-10 flex flex-col gap-4">
-          <Field label="">
-            <TextInput
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              autoComplete="email"
-            />
-          </Field>
-          <Field label="">
-            <TextInput
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={4}
-              autoComplete={mode === "login" ? "current-password" : "new-password"}
-            />
-          </Field>
-          <div className="px-6 pt-4">
-            <PrimaryButton type="submit">{mode === "login" ? "Login" : "Sign Up"}</PrimaryButton>
-          </div>
-          <button
-            type="button"
-            className="text-center text-sm font-semibold text-primary/80 underline-offset-4 hover:underline"
-            onClick={() => setMode((m) => (m === "login" ? "signup" : "login"))}
-          >
-            {mode === "login" ? "New here? Create an account" : "Already have an account? Login"}
-          </button>
-        </form>
-
+        <div
+          className="relative mt-6 min-h-0 flex-1 bg-white"
+          style={{
+            width: "100vw",
+            marginLeft: "calc(-50vw + 50%)",
+            marginRight: "calc(-50vw + 50%)",
+          }}
+        >
+          <img
+            src={studentsIllustration}
+            alt="Students using SmartPocket"
+            className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover object-top"
+            draggable={false}
+          />
+        </div>
       </div>
-      <img
-        src={studentsIllustration}
-        alt="Students using SmartPocket"
-        width={1200}
-        height={700}
-        className="pointer-events-none fixed inset-x-0 bottom-0 w-screen select-none object-cover object-top"
-        draggable={false}
-      />
     </SPShell>
   );
 }
