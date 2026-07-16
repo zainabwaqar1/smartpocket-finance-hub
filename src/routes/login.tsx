@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { sp, useSP } from "@/lib/smartpocket-store";
 import { Field, PrimaryButton, SPShell, TextInput } from "@/components/sp-shell";
+import studentsIllustration from "@/assets/login-students.png";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
