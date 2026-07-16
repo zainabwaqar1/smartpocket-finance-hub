@@ -30,7 +30,7 @@ function LoginPage() {
 
   return (
     <SPShell className="pb-0">
-      <div className="flex h-[calc(100vh-1.5rem)] flex-col overflow-hidden">
+      <div className="flex h-[calc(100vh-1.5rem)] flex-col">
         <div className="shrink-0 overflow-y-auto px-2 pt-8 pb-6">
           <div className="text-center">
             <h1 className="text-4xl font-extrabold tracking-tight text-primary">SmartPocket</h1>
