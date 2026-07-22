@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { sp, useSP } from "@/lib/smartpocket-store";
-import { Field, PrimaryButton, SPShell, TextInput } from "@/components/sp-shell";
+import { Field, PrimaryButton, SPShell, TextInput, showToast } from "@/components/sp-shell";
 
 export const Route = createFileRoute("/setup")({
   head: () => ({
@@ -21,28 +21,49 @@ function SetupPage() {
   const [income, setIncome] = useState(b?.income.toString() ?? "");
   const [savings, setSavings] = useState(b?.savingsGoal.toString() ?? "");
   const [type, setType] = useState<"Weekly" | "Monthly">(b?.type ?? "Monthly");
+  const [saving, setSaving] = useState(false); // NEW
 
+  // CHANGED — wait for the session to load before redirecting
   useEffect(() => {
+    if (state.loading) return;
     if (!state.user) navigate({ to: "/login" });
-  }, [state.user, navigate]);
+  }, [state.loading, state.user, navigate]);
 
-  function submit(e: React.FormEvent) {
+  // NEW — budget arrives async from the database; fill the fields once it lands
+  useEffect(() => {
+    if (b) {
+      setAllowance(b.allowance.toString());
+      setIncome(b.income.toString());
+      setSavings(b.savingsGoal.toString());
+      setType(b.type);
+    }
+  }, [b]);
+
+  // CHANGED — async submit: await the save, show error if it fails
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
-    sp.setBudget({
+    setSaving(true);
+    const err = await sp.setBudget({
       allowance: Number(allowance) || 0,
       income: Number(income) || 0,
       savingsGoal: Number(savings) || 0,
       type,
     });
+    setSaving(false);
+    if (err) {
+      showToast(err);
+      return;
+    }
+    showToast("Budget saved ✅");
     navigate({ to: "/" });
   }
 
   return (
-    <SPShell title="Let's Set Up Your Budget" showBack={!!b}>
+    <SPShell title="Let's Set Up Your Budget">
       <form onSubmit={submit} className="flex flex-col gap-5">
-        <RowField label={<>Monthly Allowance 💰</>} value={allowance} onChange={setAllowance} placeholder="Rs. 25,000" />
-        <RowField label={<>Monthly Income 💼</>} value={income} onChange={setIncome} placeholder="Rs. 10,000" />
-        <RowField label={<>Savings Goal 🎯</>} value={savings} onChange={setSavings} placeholder="Rs. 5,000" />
+        <RowField label={<>Monthly Allowance 💰</>} value={allowance} onChange={setAllowance} />
+        <RowField label={<>Monthly Income 💼</>} value={income} onChange={setIncome} />
+        <RowField label={<>Savings Goal 🎯</>} value={savings} onChange={setSavings} />
 
         <div className="mt-4">
           <h2 className="text-xl font-extrabold text-foreground">→ Budget Type</h2>
@@ -60,33 +81,39 @@ function SetupPage() {
         </div>
 
         <div className="mt-4">
-          <PrimaryButton type="submit">Continue</PrimaryButton>
+          <PrimaryButton type="submit" disabled={saving}>
+            {saving ? "Saving…" : "Continue"}
+          </PrimaryButton>
         </div>
       </form>
     </SPShell>
   );
 }
 
+/* RowField with a permanent "Rs." prefix inside the input */
 function RowField({
   label,
   value,
   onChange,
-  placeholder,
 }: {
   label: React.ReactNode;
   value: string;
   onChange: (v: string) => void;
-  placeholder?: string;
 }) {
   return (
     <Field label={<span className="text-base">{label} :</span>}>
-      <TextInput
-        inputMode="numeric"
-        pattern="[0-9]*"
-        value={value}
-        onChange={(e) => onChange(e.target.value.replace(/[^0-9]/g, ""))}
-        placeholder={placeholder}
-      />
+      <div className="relative">
+        <span className="pointer-events-none absolute left-6 top-1/2 -translate-y-1/2 font-semibold text-muted-foreground">
+          Rs.
+        </span>
+        <TextInput
+          inputMode="numeric"
+          pattern="[0-9]*"
+          value={value}
+          onChange={(e) => onChange(e.target.value.replace(/[^0-9]/g, ""))}
+          className="pl-14"
+        />
+      </div>
     </Field>
   );
 }

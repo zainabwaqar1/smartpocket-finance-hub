@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { Search, Trash2 } from "lucide-react";
 import {
@@ -10,7 +10,7 @@ import {
   type Category,
   type Expense,
 } from "@/lib/smartpocket-store";
-import { BottomNav, SPShell } from "@/components/sp-shell";
+import { BottomNav, SPShell, showToast } from "@/components/sp-shell";
 
 export const Route = createFileRoute("/history")({
   head: () => ({
@@ -27,9 +27,11 @@ function HistoryPage() {
   const navigate = useNavigate();
   const [q, setQ] = useState("");
 
+  // wait for the session to load before redirecting
   useEffect(() => {
+    if (state.loading) return;
     if (!state.user) navigate({ to: "/login" });
-  }, [state.user, navigate]);
+  }, [state.loading, state.user, navigate]);
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
@@ -50,6 +52,17 @@ function HistoryPage() {
 
   const weekTotals = totalsByCategory(thisWeek);
   const monthTotals = totalsByCategory(thisMonth);
+
+  // loading screen while session/data fetches
+  if (state.loading) {
+    return (
+      <SPShell>
+        <div className="grid min-h-[60vh] place-items-center">
+          <p className="text-sm font-semibold text-muted-foreground">Loading…</p>
+        </div>
+      </SPShell>
+    );
+  }
 
   return (
     <SPShell>
@@ -78,6 +91,16 @@ function HistoryPage() {
           </ul>
         </section>
       )}
+
+      {/* NEW — Back to Home button, same size as the Continue buttons */}
+      <div className="mt-8">
+        <Link
+          to="/"
+          className="block rounded-full bg-primary px-4 py-4 text-center text-sm font-bold text-primary-foreground shadow-lg shadow-primary/30"
+        >
+          Back to Home
+        </Link>
+      </div>
 
       <BottomNav />
     </SPShell>
@@ -126,6 +149,13 @@ function Section({
 }
 
 function RecentRow({ expense }: { expense: Expense }) {
+  // async delete with confirm; store rolls back and we toast on failure
+  async function handleDelete() {
+    if (!window.confirm(`Delete "${expense.name}" (${formatRs(expense.amount)})?`)) return;
+    const err = await sp.removeExpense(expense.id);
+    if (err) showToast(err);
+  }
+
   return (
     <li className="flex items-center justify-between gap-3 rounded-2xl bg-card px-4 py-3 shadow-sm">
       <div className="min-w-0">
@@ -139,7 +169,7 @@ function RecentRow({ expense }: { expense: Expense }) {
       <div className="flex shrink-0 items-center gap-3">
         <span className="text-sm font-bold text-foreground">{formatRs(expense.amount)}</span>
         <button
-          onClick={() => sp.removeExpense(expense.id)}
+          onClick={handleDelete}
           className="grid h-8 w-8 place-items-center rounded-full text-destructive transition hover:bg-destructive/10"
           aria-label="Delete"
         >

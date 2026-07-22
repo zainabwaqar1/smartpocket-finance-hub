@@ -13,6 +13,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SetupRouteImport } from './routes/setup'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as HistoryRouteImport } from './routes/history'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as BreakdownRouteImport } from './routes/breakdown'
 import { Route as AddExpenseRouteImport } from './routes/add-expense'
 import { Route as IndexRouteImport } from './routes/index'
@@ -37,6 +38,11 @@ const HistoryRoute = HistoryRouteImport.update({
   path: '/history',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BreakdownRoute = BreakdownRouteImport.update({
   id: '/breakdown',
   path: '/breakdown',
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/add-expense': typeof AddExpenseRoute
   '/breakdown': typeof BreakdownRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/history': typeof HistoryRoute
   '/login': typeof LoginRoute
   '/setup': typeof SetupRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/add-expense': typeof AddExpenseRoute
   '/breakdown': typeof BreakdownRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/history': typeof HistoryRoute
   '/login': typeof LoginRoute
   '/setup': typeof SetupRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/add-expense': typeof AddExpenseRoute
   '/breakdown': typeof BreakdownRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/history': typeof HistoryRoute
   '/login': typeof LoginRoute
   '/setup': typeof SetupRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/add-expense'
     | '/breakdown'
+    | '/forgot-password'
     | '/history'
     | '/login'
     | '/setup'
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/add-expense'
     | '/breakdown'
+    | '/forgot-password'
     | '/history'
     | '/login'
     | '/setup'
@@ -105,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/add-expense'
     | '/breakdown'
+    | '/forgot-password'
     | '/history'
     | '/login'
     | '/setup'
@@ -115,6 +127,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AddExpenseRoute: typeof AddExpenseRoute
   BreakdownRoute: typeof BreakdownRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   HistoryRoute: typeof HistoryRoute
   LoginRoute: typeof LoginRoute
   SetupRoute: typeof SetupRoute
@@ -151,6 +164,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HistoryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/breakdown': {
       id: '/breakdown'
       path: '/breakdown'
@@ -179,6 +199,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AddExpenseRoute: AddExpenseRoute,
   BreakdownRoute: BreakdownRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   HistoryRoute: HistoryRoute,
   LoginRoute: LoginRoute,
   SetupRoute: SetupRoute,
@@ -187,3 +208,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
