@@ -11,10 +11,17 @@ The research, market analysis, and analytics dashboards behind this app:
 https://github.com/zainabwaqar1/smartpocket-internship
 
 ## App Screens
-<img width="179" height="311" alt="home screen" src="https://github.com/user-attachments/assets/c5750a20-a98d-4808-b226-9321c2ffd58d" />
-<img width="161" height="308" alt="add exp" src="https://github.com/user-attachments/assets/7a6a77ec-eb24-4cba-839b-37df88dd6e2f" />
-<img width="168" height="307" alt="breakdown" src="https://github.com/user-attachments/assets/0abaf349-762c-4813-85fb-81fe711bf113" />
-<img width="170" height="312" alt="exp hist" src="https://github.com/user-attachments/assets/fb7e53b9-be93-4ec8-b6c7-330667302f3e" />
+<img width="246" height="435" alt="login" src="https://github.com/user-attachments/assets/c1fb5a80-41dd-4557-b335-aade512532bf" />
+<img width="155" height="308" alt="setup" src="https://github.com/user-attachments/assets/469e2a7e-d809-4c27-92ba-a3b40092cfd3" />
+<img width="179" height="311" alt="home screen" src="https://github.com/user-attachments/assets/9a5fc447-6ada-4ec0-9caa-8542198b21fa" />
+<img width="161" height="308" alt="add exp" src="https://github.com/user-attachments/assets/fe9ae2f2-2858-43a1-96d0-db43af835f30" />
+<img width="168" height="307" alt="breakdown" src="https://github.com/user-attachments/assets/94e14208-054f-4e7d-9866-31e0dc1a94fc" />
+<img width="170" height="312" alt="exp hist" src="https://github.com/user-attachments/assets/d5707856-6224-4bb2-b283-9406350c3289" />
+
+
+
+
+
 
 
 
