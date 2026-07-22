@@ -21,8 +21,10 @@ https://github.com/zainabwaqar1/smartpocket-internship
 <img width="165" height="300" alt="exp hist" src="https://github.com/user-attachments/assets/d5707856-6224-4bb2-b283-9406350c3289" />
 
 ## Run locally
+```
+npm install
 npm run dev
-
+```
 
 
 
