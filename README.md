@@ -1,5 +1,7 @@
 # SmartPocket — Student Budgeting App
 
+https://smartpocket-finance-tracker.lovable.app
+
 A working prototype of SmartPocket, a budgeting app for university students 
 living on a fixed monthly allowance. Built from my own UX designs: generated
 with Lovable, customized in Cursor with AI help, with a Supabase backend.
