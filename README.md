@@ -7,7 +7,7 @@ with Lovable, customized in Cursor with AI help, with a Supabase backend. The in
 Features: login/sign up, allowance and budget setup, expense tracking by category,
 spending breakdown, savings goals, and expense history.
 
-Stack: React + TypeScript (TanStack Start), Supabase (Postgres + auth) — built through AI-assisted development with Lovable and Cursor.
+Stack: React + TypeScript (TanStack Start), Supabase (Postgres + authentication) — built through AI-assisted development with Lovable and Cursor.
 
 The research, market analysis, and analytics dashboards behind this app:
 https://github.com/zainabwaqar1/smartpocket-internship
